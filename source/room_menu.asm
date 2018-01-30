@@ -27,7 +27,7 @@ FLASH_ANIMATION_DISABLED    EQU -1
 
 ;--------------------------------------------------------------------------
 
-    SECTION "Room Game Code Data",ROMX
+    SECTION "Room Menu Code Data",ROMX
 
 ;--------------------------------------------------------------------------
 
