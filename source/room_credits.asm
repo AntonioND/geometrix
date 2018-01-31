@@ -1,5 +1,12 @@
-
-;--------------------------------------------------------------------------
+;###############################################################################
+;
+;    Geometrix - A simple puzzle game for Game Boy and Game Boy Color.
+;
+;    Copyright (c) 2015, 2018 Antonio Niño Díaz (AntonioND/SkyLyrac)
+;
+;    SPDX-License-Identifier: GPL-3.0-or-later
+;
+;###############################################################################
 
     INCLUDE "hardware.inc"
     INCLUDE "engine.inc"
@@ -143,6 +150,3 @@ CreditsScreenMainLoop::
     di
 
     ret
-
-;--------------------------------------------------------------------------
-
