@@ -9,7 +9,7 @@
 ;###############################################################################
 
     IF !DEF(HEADER_INC)
-HEADER_INC SET 1
+HEADER_INC = 1
 
 ;+-----------------------------------------------------------------------------+
 ;| +-------------------------------------------------------------------------+ |
@@ -62,8 +62,8 @@ Cosine  EQU $3F00 ; / reading from them. :)
 ;- SetRandomSeed()    a = new seed                                        -
 ;--------------------------------------------------------------------------
 
-    GLOBAL  GetRandom
-    GLOBAL  SetRandomSeed
+    EXPORT  GetRandom
+    EXPORT  SetRandomSeed
 
 ;+-----------------------------------------------------------------------------+
 ;| +-------------------------------------------------------------------------+ |
@@ -79,44 +79,44 @@ Cosine  EQU $3F00 ; / reading from them. :)
 ;- irq_set_JOY()    bc = function pointer                                 -
 ;--------------------------------------------------------------------------
 
-    GLOBAL  irq_set_VBL
-    GLOBAL  irq_set_LCD
-    GLOBAL  irq_set_TIM
-    GLOBAL  irq_set_SIO
-    GLOBAL  irq_set_JOY
+    EXPORT  irq_set_VBL
+    EXPORT  irq_set_LCD
+    EXPORT  irq_set_TIM
+    EXPORT  irq_set_SIO
+    EXPORT  irq_set_JOY
 
 ;--------------------------------------------------------------------------
 ;- CPU_fast()                                                             -
 ;- CPU_slow()                                                             -
 ;--------------------------------------------------------------------------
 
-    GLOBAL  CPU_fast
-    GLOBAL  CPU_slow
+    EXPORT  CPU_fast
+    EXPORT  CPU_slow
 
 ;--------------------------------------------------------------------------
 ;- wait_vbl()                                                             -
 ;--------------------------------------------------------------------------
 
-    GLOBAL  wait_vbl
+    EXPORT  wait_vbl
 
 ;--------------------------------------------------------------------------
 ;- Reset()                                                                -
 ;--------------------------------------------------------------------------
 
-    GLOBAL  Reset
+    EXPORT  Reset
 
 ;--------------------------------------------------------------------------
 ;-                                Variables                               -
 ;--------------------------------------------------------------------------
 
-    GLOBAL  Init_Reg_A
-    GLOBAL  Init_Reg_B
+    EXPORT  Init_Reg_A
+    EXPORT  Init_Reg_B
 
-    GLOBAL  VBL_handler
-    GLOBAL  LCD_handler
-    GLOBAL  TIM_handler
-    GLOBAL  SIO_handler
-    GLOBAL  JOY_handler
+    EXPORT  VBL_handler
+    EXPORT  LCD_handler
+    EXPORT  TIM_handler
+    EXPORT  SIO_handler
+    EXPORT  JOY_handler
 
 ;+-----------------------------------------------------------------------------+
 ;| +-------------------------------------------------------------------------+ |
@@ -128,7 +128,7 @@ Cosine  EQU $3F00 ; / reading from them. :)
 ;- Main()                                                                 -
 ;--------------------------------------------------------------------------
 
-    GLOBAL  Main
+    EXPORT  Main
 
 ;+-----------------------------------------------------------------------------+
 ;| +-------------------------------------------------------------------------+ |
@@ -142,9 +142,9 @@ Cosine  EQU $3F00 ; / reading from them. :)
 ;- div_s8s8s8()     a / b -> c     a % b -> a     destroys e              -
 ;--------------------------------------------------------------------------
 
-    GLOBAL  mul_u8u8u16
-    GLOBAL  div_u8u8u8
-    GLOBAL  div_s8s8s8
+    EXPORT  mul_u8u8u16
+    EXPORT  div_u8u8u8
+    EXPORT  div_s8s8s8
 
 ;--------------------------------------------------------------------------
 ;- memset()    d = value    hl = start address    bc = size               -
@@ -153,23 +153,23 @@ Cosine  EQU $3F00 ; / reading from them. :)
 ;- memcopy_inc()    b = size    c = increase    hl = source    de = dest  -
 ;--------------------------------------------------------------------------
 
-    GLOBAL  memset
-    GLOBAL  memset_rand
-    GLOBAL  memcopy
-    GLOBAL  memcopy_inc
+    EXPORT  memset
+    EXPORT  memset_rand
+    EXPORT  memcopy
+    EXPORT  memcopy_inc
 
 ;--------------------------------------------------------------------------
 ;- scan_keys()                                                            -
 ;--------------------------------------------------------------------------
 
-    GLOBAL  scan_keys
+    EXPORT  scan_keys
 
 ;--------------------------------------------------------------------------
 ;-                               Variables                                -
 ;--------------------------------------------------------------------------
 
-    GLOBAL  joy_held ; Holds current held keys
-    GLOBAL  joy_pressed ; Holds keys that have been pressed this frame
+    EXPORT  joy_held ; Holds current held keys
+    EXPORT  joy_pressed ; Holds keys that have been pressed this frame
 
 ;--------------------------------------------------------------------------
 ;-                              Definitions                               -
@@ -194,12 +194,12 @@ PAD_RIGHT   EQU $01
 ;- ___long_call()    hl = function    b = bank where it is located        -
 ;--------------------------------------------------------------------------
 
-    GLOBAL  rom_handler_init
-    GLOBAL  rom_bank_pop
-    GLOBAL  rom_bank_push
-    GLOBAL  rom_bank_set
-    GLOBAL  rom_bank_push_set
-    GLOBAL  ___long_call
+    EXPORT  rom_handler_init
+    EXPORT  rom_bank_pop
+    EXPORT  rom_bank_push
+    EXPORT  rom_bank_set
+    EXPORT  rom_bank_push_set
+    EXPORT  ___long_call
 
 ;+-----------------------------------------------------------------------------+
 ;| +-------------------------------------------------------------------------+ |
@@ -214,10 +214,10 @@ PAD_RIGHT   EQU $01
 ;- screen_off()                                                           -
 ;--------------------------------------------------------------------------
 
-    GLOBAL  wait_ly
-    GLOBAL  wait_frames
-    GLOBAL  wait_screen_blank
-    GLOBAL  screen_off
+    EXPORT  wait_ly
+    EXPORT  wait_frames
+    EXPORT  wait_screen_blank
+    EXPORT  screen_off
 
 ;--------------------------------------------------------------------------
 ;- vram_copy()    bc = size    hl = source address    de = dest address   -
@@ -225,9 +225,9 @@ PAD_RIGHT   EQU $01
 ;- vram_copy_tiles()    bc = tiles    de = start index    hl = source     -
 ;--------------------------------------------------------------------------
 
-    GLOBAL  vram_copy
-    GLOBAL  vram_memset
-    GLOBAL  vram_copy_tiles
+    EXPORT  vram_copy
+    EXPORT  vram_memset
+    EXPORT  vram_copy_tiles
 
 ;--------------------------------------------------------------------------
 ;- init_OAM()                                                             -
@@ -243,20 +243,20 @@ PAD_RIGHT   EQU $01
 ;- spr_set_palette()    a = palette number    hl = pointer to data        -
 ;--------------------------------------------------------------------------
 
-    GLOBAL  init_OAM
-    GLOBAL  refresh_OAM
-    GLOBAL  refresh_custom_OAM
-    GLOBAL  sprite_get_base_pointer
-    GLOBAL  sprite_set_xy
-    GLOBAL  sprite_set_tile
-    GLOBAL  sprite_set_params
-    GLOBAL  spr_set_palette
+    EXPORT  init_OAM
+    EXPORT  refresh_OAM
+    EXPORT  refresh_custom_OAM
+    EXPORT  sprite_get_base_pointer
+    EXPORT  sprite_set_xy
+    EXPORT  sprite_set_tile
+    EXPORT  sprite_set_params
+    EXPORT  spr_set_palette
 
 ;--------------------------------------------------------------------------
 ;-                               Variables                                -
 ;--------------------------------------------------------------------------
 
-    GLOBAL  OAM_Copy ; Pointer to the copy in RAM of the OAM
+    EXPORT  OAM_Copy ; Pointer to the copy in RAM of the OAM
 
 ;--------------------------------------------------------------------------
 ;- bg_set_tile()    b = x    c = y    a = tile index                      -
@@ -265,9 +265,9 @@ PAD_RIGHT   EQU $01
 ;- bg_set_palette()    a = palette number    hl = pointer to data         -
 ;--------------------------------------------------------------------------
 
-    GLOBAL  bg_set_tile
-    GLOBAL  bg_set_tile_wrap
-    GLOBAL  bg_set_palette
+    EXPORT  bg_set_tile
+    EXPORT  bg_set_tile_wrap
+    EXPORT  bg_set_palette
 
 ;-------------------------------------------------------------------------------
 

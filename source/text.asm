@@ -56,26 +56,26 @@ credits_ascii_to_tiles_table:
 	;   *      +      ,       -      .     /
 	DB	O_NONE,O_NONE,O_COMMA,O_NONE,O_DOT,O_BAR
 	;   0 1 2 3 4 5 6 7 8 9
-CHARACTER	SET	0
+CHARACTER	=	0
 	REPT	10
 	DB	O_ZERO+CHARACTER
-CHARACTER	SET	CHARACTER+1
+CHARACTER	=	CHARACTER+1
 	ENDR
 	;   :          ;      <      =      >      ?          @
 	DB	O_TWO_DOTS,O_NONE,O_NONE,O_NONE,O_NONE,O_QUESTION,O_AT
 	;   A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
-CHARACTER	SET	0
+CHARACTER	=	0
 	REPT	26
 	DB	O_A_UPPERCASE+CHARACTER
-CHARACTER	SET	CHARACTER+1
+CHARACTER	=	CHARACTER+1
 	ENDR
 	;   [      \      ]      ^      _            `
 	DB	O_NONE,O_NONE,O_NONE,O_NONE,O_UNDERSCORE,O_NONE
 	; a b c d e f g h i j k l m n o p q r s t u v w x y z
-CHARACTER	SET	0
+CHARACTER	=	0
 	REPT	26
 	DB	O_A_LOWERCASE+CHARACTER
-CHARACTER	SET	CHARACTER+1
+CHARACTER	=	CHARACTER+1
 	ENDR
 	;   {      |      }      ~
 	DB	O_NONE,O_NONE,O_NONE,O_NTILDE

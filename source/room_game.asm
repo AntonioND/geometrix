@@ -2448,7 +2448,7 @@ Board_CopyVRAM::
     ld      b,h
     ld      c,l ; save sp in bc
 
-ITERATION SET 2
+ITERATION = 2
     REPT    9 ; lines to be copied without checking (during VBL)
         ld      hl,$9C00+2+32*ITERATION
         ld      sp,BoardVRAM+2+32*ITERATION
@@ -2459,7 +2459,7 @@ ITERATION SET 2
             ld      [hl],d
             inc     hl
         ENDR
-ITERATION SET ITERATION+1
+ITERATION = ITERATION+1
     ENDR
 
     ld      h,b
@@ -2468,7 +2468,7 @@ ITERATION SET ITERATION+1
 
     ; Nitro loop: Force copy to VRAM and read back to check if it was copied ok.
     ; First used by nitro2k01, recommendation by beware :P
-;ITERATION SET 11
+;ITERATION = 11
     REPT    9 ; lines to be copied while checking
     ld      hl,$9C00+2+32*ITERATION
     ld      de,BoardVRAM+2+32*ITERATION
@@ -2481,7 +2481,7 @@ ITERATION SET ITERATION+1
             jr      nz,.repeat\@
             inc     hl
         ENDR
-ITERATION SET ITERATION+1
+ITERATION = ITERATION+1
     ENDR
 
     ; Copy score and time/swaps - Checking
