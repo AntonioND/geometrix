@@ -22,7 +22,7 @@ BoardStatus:    DS  BOARD_SIZE ; Number of form in each position
 
 BoardFrame:     DS  BOARD_SIZE ; Frame of each position
 BoardCountDown: DS  BOARD_SIZE ; Ticks to animate (0 = update)
-BOARD_ANIMATION_TICKS   EQU 64 ; Ticks to update. Should be a power of 2.
+    DEF BOARD_ANIMATION_TICKS   EQU 64 ; Ticks to update. Should be a power of 2.
 
 BoardMetatile:  DS  BOARD_SIZE ; Metatile of each position
 
@@ -39,12 +39,12 @@ ComboBubbleCountdown:   DS  1 ; Frames to disappear
 
 ; 0 = Regular, 1 = removing completed lines, 2 = gravity after removal
 GameLogicStatus:    DS  1 ; state 2 can go back to 1 if new completed lines (combo)
-STATUS_REGULAR      EQU 0
-STATUS_REMOVE_LINES EQU 1
-STATUS_GRAVITY      EQU 2
+    DEF STATUS_REGULAR      EQU 0
+    DEF STATUS_REMOVE_LINES EQU 1
+    DEF STATUS_GRAVITY      EQU 2
 
 DeleteCountdown:    DS  1 ; countdown for delete blocks animation
-DELETE_COUNTDOWN_TICKS  EQU 30
+    DEF DELETE_COUNTDOWN_TICKS  EQU 30
 
 GameFillScreenMode:  DS  1 ; 1 if screen should be filled
 
@@ -87,38 +87,44 @@ BoardVRAM_Mutex:    DS 1 ; if 1, VBL won't update the screen
 
 GeoTilesData:
     INCBIN	"data/geo_tiles.bin"
-NUMBER_OF_FORMS EQU 6+1
-GeoTilesNumber  EQU 4*2*NUMBER_OF_FORMS ; Tiles per frame * frames per form * number of forms
+
+    DEF NUMBER_OF_FORMS EQU 6+1
+    ; Tiles per frame * frames per form * number of forms
+    DEF GeoTilesNumber  EQU 4*2*NUMBER_OF_FORMS
 
 GeoTilesDMGData:
     INCBIN	"data/geo_tiles_dmg.bin"
 
 GameBGTilesData:
     INCBIN	"data/game_bg_tiles.bin"
-GameBGTilesNumber  EQU 76-56+1
+
+    DEF GameBGTilesNumber  EQU 76-56+1
 
 GameBGMapData: ; tilemap first, attr map second
     INCBIN	"data/game_bg_map.bin"
-GAME_BG_MAP_WIDTH   EQU 20
-GAME_BG_MAP_HEIGHT  EQU 18
+
+    DEF GAME_BG_MAP_WIDTH   EQU 20
+    DEF GAME_BG_MAP_HEIGHT  EQU 18
 
 PauseBGMapData: ; tilemap first, attr map second
     INCBIN	"data/pause_bg_map.bin"
-PAUSE_BG_MAP_WIDTH  EQU 20
-PAUSE_BG_MAP_HEIGHT EQU 23
 
-PAUSE_SCREEN_BASE_Y         EQU 32
-PAUSE_SCREEN_BASE_Y_END     EQU 40
-PAUSE_SCREEN_BASE_Y_LIMIT   EQU PAUSE_SCREEN_BASE_Y_END+(-8*8)
-PAUSE_SCREEN_BASE_Y_WON     EQU PAUSE_SCREEN_BASE_Y_END+(-13*8)
-PAUSE_SCREEN_BASE_Y_LOST    EQU PAUSE_SCREEN_BASE_Y_END+(-18*8)
+    DEF PAUSE_BG_MAP_WIDTH  EQU 20
+    DEF PAUSE_BG_MAP_HEIGHT EQU 23
 
-PAUSE_SPACE_TILE    EQU 181
-PAUSE_SELECT_TILE   EQU 189 ; ARROW
+    DEF PAUSE_SCREEN_BASE_Y         EQU 32
+    DEF PAUSE_SCREEN_BASE_Y_END     EQU 40
+    DEF PAUSE_SCREEN_BASE_Y_LIMIT   EQU PAUSE_SCREEN_BASE_Y_END+(-8*8)
+    DEF PAUSE_SCREEN_BASE_Y_WON     EQU PAUSE_SCREEN_BASE_Y_END+(-13*8)
+    DEF PAUSE_SCREEN_BASE_Y_LOST    EQU PAUSE_SCREEN_BASE_Y_END+(-18*8)
+
+    DEF PAUSE_SPACE_TILE    EQU 181
+    DEF PAUSE_SELECT_TILE   EQU 189 ; ARROW
 
 ComboBubbleTilesData:
     INCBIN  "data/combo_tiles.bin"
-ComboBubblesTilesNumber  EQU 2*(9+1)
+
+    DEF ComboBubblesTilesNumber  EQU 2*(9+1)
 
 ;--------------------------------------------------------------------------
 
@@ -224,9 +230,9 @@ LoadMainGameScreen:: ; a = game mode
 
     ;ld      a,-(BOARD_X_OFFSET_TILES*16)
     ld      a,0
-    ld      [rSCX],a
+    ldh     [rSCX],a
     ld      a,-(BOARD_Y_OFFSET_TILES*16)
-    ld      [rSCY],a
+    ldh     [rSCY],a
 
     ld      a,[EnabledGBC]
     and     a,a
@@ -249,7 +255,7 @@ LoadMainGameScreen:: ; a = game mode
 
     ; Load game BG
     xor     a,a
-    ld      [rVBK],a
+    ldh     [rVBK],a
     ld      de,BoardVRAM+32*2 ; copy to temporal buffer
     ld      hl,GameBGMapData
     ld      a,GAME_BG_MAP_HEIGHT
@@ -290,7 +296,7 @@ LoadMainGameScreen:: ; a = game mode
     jr      z,.skip_attr_1
 
     ld      a,1
-    ld      [rVBK],a
+    ldh     [rVBK],a
     ld      de,BoardVRAM_GBC+32*2
     ld      hl,GameBGMapData+GAME_BG_MAP_WIDTH*GAME_BG_MAP_HEIGHT
     ld      a,GAME_BG_MAP_HEIGHT
@@ -312,7 +318,7 @@ LoadMainGameScreen:: ; a = game mode
 
     ; Load pause BG
     xor     a,a
-    ld      [rVBK],a
+    ldh     [rVBK],a
     ld      de,$9800
     ld      hl,PauseBGMapData
     ld      a,PAUSE_BG_MAP_HEIGHT
@@ -335,7 +341,7 @@ LoadMainGameScreen:: ; a = game mode
     jr      z,.skip_attr_2
 
     ld      a,1
-    ld      [rVBK],a
+    ldh     [rVBK],a
     ld      de,$9800
     ld      hl,PauseBGMapData+PAUSE_BG_MAP_WIDTH*PAUSE_BG_MAP_HEIGHT
     ld      a,PAUSE_BG_MAP_HEIGHT
@@ -411,17 +417,17 @@ LoadMainGameScreen:: ; a = game mode
     call    spr_set_palette
 
     ld      a,%00011011
-    ld      [rBGP],a
+    ldh     [rBGP],a
     ld      a,%11100000
-    ld      [rOBP0],a
-    ld      [rOBP1],a
+    ldh     [rOBP0],a
+    ldh     [rOBP1],a
 
     ; Enable interrupts
     ld      a,IEF_LCDC|IEF_VBLANK
-    ld      [rIE],a
+    ldh     [rIE],a
 
     xor     a,a
-    ld      [rSTAT],a ; disable STAT interrupt for now, only used when in pause mode
+    ldh     [rSTAT],a ; disable STAT interrupt for now, only used when in pause mode
 
     ld      bc,GameHandlerVBL
     call    irq_set_VBL
@@ -429,28 +435,28 @@ LoadMainGameScreen:: ; a = game mode
     call    irq_set_LCD
 
     xor     a,a
-    ld      [rIF],a ; clear interrupt flags
+    ldh     [rIF],a ; clear interrupt flags
 
     ei
 
     ; Screen configuration
     ld      a,[LCDCF_GBC_MODE]
     or      a,LCDCF_BG9C00|LCDCF_WIN9800|LCDCF_OBJON|LCDCF_ON|LCDCF_OBJ8
-    ld      [rLCDC],a
+    ldh     [rLCDC],a
 
     ; Done
     ret
 
 ;--------------------------------------------------------------------------
 
-COMBO_BUBBLE_SPR_TILE_BASE      EQU 64 ; bank in $8000
-COMBO_BUBBLE_SPR_OAM_BASE       EQU 20 ; sprite number 20-...
-COMBO_BUBBLES_FRAMES_DURATION   EQU 60 ; frames before disappearing
+    DEF COMBO_BUBBLE_SPR_TILE_BASE      EQU 64 ; bank in $8000
+    DEF COMBO_BUBBLE_SPR_OAM_BASE       EQU 20 ; sprite number 20-...
+    DEF COMBO_BUBBLES_FRAMES_DURATION   EQU 60 ; frames before disappearing
 
-COMBO_BUBBLES_RAND_RANGE_X      EQU 64
-COMBO_BUBBLES_RAND_RANGE_Y      EQU 32
-COMBO_BUBBLES_RAND_BASE_X       EQU 8 + ((160-64-16)/2)
-COMBO_BUBBLES_RAND_BASE_Y       EQU 16 + ((144-32-16)/2) - 16 ; move a bit to the top
+    DEF COMBO_BUBBLES_RAND_RANGE_X      EQU 64
+    DEF COMBO_BUBBLES_RAND_RANGE_Y      EQU 32
+    DEF COMBO_BUBBLES_RAND_BASE_X       EQU 8 + ((160-64-16)/2)
+    DEF COMBO_BUBBLES_RAND_BASE_Y       EQU 16 + ((144-32-16)/2) - 16 ; move a bit to the top
 
 ComboBubblesLoad:
 
@@ -619,20 +625,20 @@ ComboBubblesDelete:
 
 GameHandlerLCD_Pause:
 
-    ld      a,[rLY]
+    ldh     a,[rLY]
     cp      a,PAUSE_SCREEN_BASE_Y-1
     jr      nz,.bottom_of_sign
 
     call    wait_screen_blank
     ld      a,[LCDCF_GBC_MODE]
     or      a,LCDCF_BG9800|LCDCF_OBJON|LCDCF_ON
-    ld      [rLCDC],a
+    ldh     [rLCDC],a
     ld      a,[GamePausedBaseSCY]
-    ld      [rSCY],a
+    ldh     [rSCY],a
 
     ld      a,[GamePausedHeight]
     add     a,PAUSE_SCREEN_BASE_Y -1
-    ld      [rLYC],a
+    ldh     [rLYC],a
 
     ret
 
@@ -641,12 +647,12 @@ GameHandlerLCD_Pause:
     call    wait_screen_blank
     ld      a,[LCDCF_GBC_MODE]
     or      a,LCDCF_BG9C00|LCDCF_OBJON|LCDCF_ON
-    ld      [rLCDC],a
+    ldh     [rLCDC],a
     ld      a,-(BOARD_Y_OFFSET_TILES*16)
-    ld      [rSCY],a
+    ldh     [rSCY],a
 
     ld      a,PAUSE_SCREEN_BASE_Y -1
-    ld      [rLYC],a
+    ldh     [rLYC],a
 
     ret
 
@@ -654,20 +660,20 @@ GameHandlerLCD_Pause:
 
 GameHandlerLCD_End:
 
-    ld      a,[rLY]
+    ldh     a,[rLY]
     cp      a,PAUSE_SCREEN_BASE_Y_END-1
     jr      nz,.bottom_of_sign
 
     call    wait_screen_blank
     ld      a,[LCDCF_GBC_MODE]
     or      a,LCDCF_BG9800|LCDCF_OBJON|LCDCF_ON
-    ld      [rLCDC],a
+    ldh     [rLCDC],a
     ld      a,[GamePausedBaseSCY]
-    ld      [rSCY],a
+    ldh     [rSCY],a
 
     ld      a,[GamePausedHeight]
     add     a,PAUSE_SCREEN_BASE_Y_END -1
-    ld      [rLYC],a
+    ldh     [rLYC],a
 
     ret
 
@@ -676,12 +682,12 @@ GameHandlerLCD_End:
     call    wait_screen_blank
     ld      a,[LCDCF_GBC_MODE]
     or      a,LCDCF_BG9C00|LCDCF_OBJON|LCDCF_ON
-    ld      [rLCDC],a
+    ldh     [rLCDC],a
     ld      a,-(BOARD_Y_OFFSET_TILES*16)
-    ld      [rSCY],a
+    ldh     [rSCY],a
 
     ld      a,PAUSE_SCREEN_BASE_Y_END -1
-    ld      [rLYC],a
+    ldh     [rLYC],a
 
     ret
 
@@ -2035,9 +2041,9 @@ SetEndingSign: ; Reads GameResult and puts the corresponding sign
     call    ComboBubblesDelete
 
     ld      a,PAUSE_SCREEN_BASE_Y -1
-    ld      [rLYC],a
+    ldh     [rLYC],a
     ld      a,STATF_LYC
-    ld      [rSTAT],a
+    ldh     [rSTAT],a
 
     ld      bc,GameHandlerLCD_End
     call    irq_set_LCD
@@ -2093,9 +2099,9 @@ PauseSet:
     call    ComboBubblesDelete
 
     ld      a,PAUSE_SCREEN_BASE_Y -1
-    ld      [rLYC],a
+    ldh     [rLYC],a
     ld      a,STATF_LYC
-    ld      [rSTAT],a
+    ldh     [rSTAT],a
 
     ld      a,0
     ld      [GamePauseCursor],a
@@ -2119,7 +2125,7 @@ PauseUnset:
     call    CursorShow
 
     xor     a,a
-    ld      [rSTAT],a
+    ldh     [rSTAT],a
 
     ld      bc,$0000
     call    irq_set_LCD
@@ -2423,14 +2429,14 @@ Board_CopyVRAM::
     jr      z,.not_gbc
 
     xor     a,a
-    ld      [rVBK],a
+    ldh     [rVBK],a
     DMA_COPY    BoardVRAM, $9C00, 32*(18+2), 0
 
     ld      a,1
-    ld      [rVBK],a
+    ldh     [rVBK],a
     DMA_COPY    BoardVRAM_GBC, $9C00, 32*(18+2), 0
     xor     a,a
-    ld      [rVBK],a
+    ldh     [rVBK],a
 
     ret
 

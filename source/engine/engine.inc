@@ -17,34 +17,34 @@
 ;| +-------------------------------------------------------------------------+ |
 ;+-----------------------------------------------------------------------------+
 
-DMA_COPY : MACRO   ;   src, dst, size, is_hdma
+MACRO DMA_COPY  ; src, dst, size, is_hdma
     ld      a, ( \1 >> 8 )& $FF
-    ld      [rHDMA1],a
+    ldh     [rHDMA1],a
     ld      a, \1 & $F0 ; Lower 4 bits ignored
-    ld      [rHDMA2],a
+    ldh     [rHDMA2],a
 
     ld      a, ( \2 >> 8 )& $1F ; Upper 3 bits ignored
-    ld      [rHDMA3],a
+    ldh     [rHDMA3],a
     ld      a, \2 & $F0 ; Lower 4 bits ignored
-    ld      [rHDMA4],a
+    ldh     [rHDMA4],a
 
     ld      a, ( ( ( \3 >> 4 ) - 1 ) | ( \4 << 7 ) ) ; ( Size / $10 ) - 1
-    ld      [rHDMA5],a
+    ldh     [rHDMA5],a
 ENDM
 
-LONG_CALL : MACRO  ;  function
+MACRO LONG_CALL ; function
     ld      b,BANK(\1)
     ld      hl,\1
     call    ___long_call
 ENDM
 
-LONG_CALL_ARGS : MACRO  ;  function
+MACRO LONG_CALL_ARGS ;  function
     ld      a,BANK(\1)
     ld      hl,\1
     call    ___long_call_args ; a bit slower, but it can use bc and de for arguments
 ENDM
 
-CALL_HL : MACRO
+MACRO CALL_HL
     rst     $08
 ENDM
 
@@ -54,8 +54,8 @@ ENDM
 ;| +-------------------------------------------------------------------------+ |
 ;+-----------------------------------------------------------------------------+
 
-Sine    EQU $3E00 ; \ Aligned to $100 to improve speed when
-Cosine  EQU $3F00 ; / reading from them. :)
+    DEF Sine   EQU $3E00 ; \ Aligned to $100 to improve speed when
+    DEF Cosine EQU $3F00 ; / reading from them. :)
 
 ;--------------------------------------------------------------------------
 ;- GetRandom()    a = returned value    hl is destroyed                   -
@@ -175,14 +175,14 @@ Cosine  EQU $3F00 ; / reading from them. :)
 ;-                              Definitions                               -
 ;--------------------------------------------------------------------------
 
-PAD_START   EQU $80
-PAD_SELECT  EQU $40
-PAD_B       EQU $20
-PAD_A       EQU $10
-PAD_DOWN    EQU $08
-PAD_UP      EQU $04
-PAD_LEFT    EQU $02
-PAD_RIGHT   EQU $01
+    DEF PAD_START   EQU $80
+    DEF PAD_SELECT  EQU $40
+    DEF PAD_B       EQU $20
+    DEF PAD_A       EQU $10
+    DEF PAD_DOWN    EQU $08
+    DEF PAD_UP      EQU $04
+    DEF PAD_LEFT    EQU $02
+    DEF PAD_RIGHT   EQU $01
 
 ;--------------------------------------------------------------------------
 ;- rom_handler_init()                                                     -

@@ -49,9 +49,10 @@ clean:
 	@echo rm $(OBJ) $(BIN) $(NAME).sym $(NAME).map
 	@rm -f $(OBJ) $(BIN) $(NAME).sym $(NAME).map
 
+# TODO: Remove the -h when RGBASM is updated to remove it
 %.obj : %.asm
 	@echo rgbasm $@ $<
-	@$(RGBASM) $(INCLUDES) -o$@ $<
+	@$(RGBASM) $(INCLUDES) -h -o$@ $<
 
 $(BIN): $(OBJ)
 	@echo rgblink $(BIN)

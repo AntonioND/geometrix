@@ -20,8 +20,8 @@
 ;--------------------------------------------------------------------------
 
 SFX_Countdown:  DS  1
-TIMER_COUNTDOWN         EQU     3 ; 4kHz, TIMA = 0, TMA = 0
-TIMER_COUNTDOWN_MENU    EQU     2 ; 4kHz, TIMA = 0, TMA = 0
+    DEF TIMER_COUNTDOWN         EQU     3 ; 4kHz, TIMA = 0, TMA = 0
+    DEF TIMER_COUNTDOWN_MENU    EQU     2 ; 4kHz, TIMA = 0, TMA = 0
 
 ;--------------------------------------------------------------------------
 
@@ -36,14 +36,14 @@ SFX_TimerHandler:
     ld      [SFX_Countdown],a
     ret     nz
 
-    ld      a,[rIE]
+    ldh     a,[rIE]
     and     a,(~IEF_TIMER)&$FF
-    ld      [rIE],a
+    ldh     [rIE],a
 
     xor     a,a
-    ld      [rNR12],a ; volume 0
+    ldh     [rNR12],a ; volume 0
     xor     a,a
-    ld      [rNR14],a ; disable
+    ldh     [rNR14],a ; disable
 
     ld      a,8|4|2|1 ; enable all channels
     call    gbt_enable_channels
@@ -66,28 +66,28 @@ SFX_DeleteLine:: ; a = combo
     call    gbt_enable_channels
 
     xor     a,a
-    ld      [rTMA],a
+    ldh     [rTMA],a
     ld      a,TACF_START|TACF_4KHZ
-    ld      [rTAC],a
+    ldh     [rTAC],a
     xor     a,a
-    ld      [rTIMA],a
+    ldh     [rTIMA],a
     ld      a,TIMER_COUNTDOWN
     ld      [SFX_Countdown],a
 
     ld      a,$80
-    ld      [rNR52],a ; sound on
+    ldh     [rNR52],a ; sound on
     ld      a,$77
-    ld      [rNR50],a ; volume max for both speakers
+    ldh     [rNR50],a ; volume max for both speakers
     ld      a,$FF
-    ld      [rNR51],a ; enable all channels in both speakers
+    ldh     [rNR51],a ; enable all channels in both speakers
 
     ld      a,(1<<4) | (0<<3) | 7
-    ld      [rNR10],a ; sweep : time, subtract, 7 sweeps
+    ldh     [rNR10],a ; sweep : time, subtract, 7 sweeps
     ld      a,(1<<6)
-    ld      [rNR11],a ; duty, lenght (unused)
+    ldh     [rNR11],a ; duty, lenght (unused)
 
     ld      a,(15<<4) ; 100% volume, no envelope
-    ld      [rNR12],a
+    ldh     [rNR12],a
 
     pop     af ;*)
     ; a = combo
@@ -104,15 +104,15 @@ SFX_DeleteLine:: ; a = combo
         ld      b,[hl]
 
     ld      a,c
-    ld      [rNR13],a ; freq low
+    ldh     [rNR13],a ; freq low
     ld      a,b
     or      a,$80 ; enable
-    ld      [rNR14],a ; freq high, enable, don't use length
+    ldh     [rNR14],a ; freq high, enable, don't use length
 
     ; Enable interrupt
-    ld      a,[rIE]
+    ldh     a,[rIE]
     or      a,IEF_TIMER
-    ld      [rIE],a
+    ldh     [rIE],a
 
     ret
 
@@ -128,39 +128,39 @@ SFX_ChangeOption:: ; For menues
     call    gbt_enable_channels
 
     xor     a,a
-    ld      [rTMA],a
+    ldh     [rTMA],a
     ld      a,TACF_START|TACF_4KHZ
-    ld      [rTAC],a
+    ldh     [rTAC],a
     xor     a,a
-    ld      [rTIMA],a
+    ldh     [rTIMA],a
     ld      a,TIMER_COUNTDOWN_MENU
     ld      [SFX_Countdown],a
 
     ld      a,$80
-    ld      [rNR52],a ; sound on
+    ldh     [rNR52],a ; sound on
     ld      a,$77
-    ld      [rNR50],a ; volume max for both speakers
+    ldh     [rNR50],a ; volume max for both speakers
     ld      a,$FF
-    ld      [rNR51],a ; enable all channels in both speakers
+    ldh     [rNR51],a ; enable all channels in both speakers
 
     ld      a,0
-    ld      [rNR10],a ; disable sweep
+    ldh     [rNR10],a ; disable sweep
     ld      a,(1<<6)
-    ld      [rNR11],a ; duty, lenght (unused)
+    ldh     [rNR11],a ; duty, lenght (unused)
     ld      a,(15<<4) ; 100% volume, no envelope
-    ld      [rNR12],a
+    ldh     [rNR12],a
 
     ld      bc,1546 ; C6
     ld      a,c
-    ld      [rNR13],a ; freq low
+    ldh     [rNR13],a ; freq low
     ld      a,b
     or      a,$80 ; enable
-    ld      [rNR14],a ; freq high, enable, don't use length
+    ldh     [rNR14],a ; freq high, enable, don't use length
 
     ; Enable interrupt
-    ld      a,[rIE]
+    ldH     a,[rIE]
     or      a,IEF_TIMER
-    ld      [rIE],a
+    ldh     [rIE],a
 
     ret
 

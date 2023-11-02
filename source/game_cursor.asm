@@ -27,7 +27,7 @@ CursorTileY::       DS  1
 CursorX:            DS  1
 CursorY:            DS  1
 
-CURSOR_ANIMATION_TICKS  EQU 10
+    DEF CURSOR_ANIMATION_TICKS  EQU 10
 
 ;--------------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ CURSOR_ANIMATION_TICKS  EQU 10
 CursorTilesData:
     INCBIN	"data/cursor_tiles.bin"
 
-CursorTilesNumber EQU 3
+    DEF CursorTilesNumber EQU 3
 
 ;--------------------------------------------------------------------------
 
@@ -114,9 +114,9 @@ CursorRefresh::
     add     12+(BOARD_Y_OFFSET_TILES*16)
     ld      [CursorY],a
 
-CURSOR_CORNER_TILE      EQU 0
-CURSOR_VERTICAL_TILE    EQU 1
-CURSOR_HORIZONTAL_TILE  EQU 2
+    DEF CURSOR_CORNER_TILE      EQU 0
+    DEF CURSOR_VERTICAL_TILE    EQU 1
+    DEF CURSOR_HORIZONTAL_TILE  EQU 2
 
     ld      a,[CursorHorizontal]
     and     a,a

@@ -22,9 +22,10 @@
 
 TextTilesData:
     INCBIN	"data/text_tiles.bin"
-TEXT_BASE_TILE  EQU 180
-TEXT_MAX_TILE   EQU 255
-TextTilesNumber EQU TEXT_MAX_TILE-TEXT_BASE_TILE+1
+
+    DEF TEXT_BASE_TILE  EQU 180
+    DEF TEXT_MAX_TILE   EQU 255
+    DEF TextTilesNumber EQU TEXT_MAX_TILE-TEXT_BASE_TILE+1
 
 
 ;----------------------------------------------------------------------------
@@ -32,7 +33,7 @@ TextTilesNumber EQU TEXT_MAX_TILE-TEXT_BASE_TILE+1
 LoadText::
 
     xor     a,a
-    ld      [rVBK],a
+    ldh     [rVBK],a
 
     ld      bc,TextTilesNumber
     ld      de,TEXT_BASE_TILE ; Bank at 8800h

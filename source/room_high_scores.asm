@@ -26,8 +26,8 @@ TimeScoreWRAM:      DS  3*9
 ScoreCursor_X:      DS  1
 ScoreCursor_Y:      DS  1
 
-HIGH_SCORES_SPACE_TILE    EQU 181
-HIGH_SCORES_SELECT_TILE   EQU 189 ; ARROW
+    DEF HIGH_SCORES_SPACE_TILE    EQU 181
+    DEF HIGH_SCORES_SELECT_TILE   EQU 189 ; ARROW
 
 ;--------------------------------------------------------------------------
 
@@ -35,7 +35,7 @@ HIGH_SCORES_SELECT_TILE   EQU 189 ; ARROW
 
 ;--------------------------------------------------------------------------
 
-MAGIC_STRING_LENGTH EQU 16
+    DEF MAGIC_STRING_LENGTH EQU 16
 
 SRAM_START:
 
@@ -48,7 +48,7 @@ CheckSumSRAM:       DS  1 ; Sum of all previous bytes (not the magic string)
 
 SRAM_END:
 
-SRAM_DATA_SIZE  EQU SRAM_END-SRAM_START
+    DEF SRAM_DATA_SIZE  EQU SRAM_END-SRAM_START
 
 ;--------------------------------------------------------------------------
 
@@ -61,8 +61,9 @@ MAGIC_STRING: ; MAGIC_STRING_LENGTH
 
 HighScoresBGMapData: ; tilemap first, attr map second
     INCBIN	"data/high_score_bg_map.bin"
-HIGH_SCORES_BG_MAP_WIDTH   EQU 20
-HIGH_SCORES_BG_MAP_HEIGHT  EQU 18
+
+    DEF HIGH_SCORES_BG_MAP_WIDTH   EQU 20
+    DEF HIGH_SCORES_BG_MAP_HEIGHT  EQU 18
 
 ;--------------------------------------------------------------------------
 
@@ -88,7 +89,7 @@ LoadMenuScreen:
     call    LoadMenuTiles
 
     xor     a,a
-    ld      [rVBK],a
+    ldh     [rVBK],a
     ld      de,$9800
     ld      hl,HighScoresBGMapData
     ld      a,HIGH_SCORES_BG_MAP_HEIGHT
@@ -111,7 +112,7 @@ LoadMenuScreen:
     jr      z,.skip_attr
 
     ld      a,1
-    ld      [rVBK],a
+    ldh     [rVBK],a
     ld      de,$9800
     ld      hl,HighScoresBGMapData+HIGH_SCORES_BG_MAP_WIDTH*HIGH_SCORES_BG_MAP_HEIGHT
     ld      a,HIGH_SCORES_BG_MAP_HEIGHT
@@ -132,8 +133,8 @@ LoadMenuScreen:
 .skip_attr:
 
     xor     a,a
-    ld      [rSCX],a
-    ld      [rSCY],a
+    ldh     [rSCX],a
+    ldh     [rSCY],a
 
     ; Load text tiles
     call    LoadText
@@ -150,7 +151,7 @@ LoadMenuScreen:
 
     ; Enable interrupts
     ld      a,IEF_VBLANK
-    ld      [rIE],a
+    ldh     [rIE],a
 
     ld      bc,HighScoresHandlerVBL
     call    irq_set_VBL
@@ -160,7 +161,7 @@ LoadMenuScreen:
     ; Screen configuration
     ld      a,[LCDCF_GBC_MODE]
     or      a,LCDCF_BG9800|LCDCF_ON
-    ld      [rLCDC],a
+    ldh     [rLCDC],a
 
     ; Done
     ret

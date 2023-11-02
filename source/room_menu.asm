@@ -25,12 +25,12 @@ FlashAnimationCountdown:    DS  1
 FlashAnimationSelected: DS  1
 FlashAnimIndex: DS  1
 
-FLASH_DELAY_CREATE_ANIMATION        EQU 16
-FLASH_DELAY_CREATE_ANIMATION_RANGE  EQU 32 ; power of 2
+    DEF FLASH_DELAY_CREATE_ANIMATION        EQU 16
+    DEF FLASH_DELAY_CREATE_ANIMATION_RANGE  EQU 32 ; power of 2
 
-FLASH_DELAY_ANIMATION_FRAMES    EQU 4
+    DEF FLASH_DELAY_ANIMATION_FRAMES    EQU 4
 
-FLASH_ANIMATION_DISABLED    EQU -1
+    DEF FLASH_ANIMATION_DISABLED    EQU -1
 
 ;--------------------------------------------------------------------------
 
@@ -40,21 +40,25 @@ FLASH_ANIMATION_DISABLED    EQU -1
 
 MenuBGTilesData:
     INCBIN	"data/menu_bg_tiles.bin"
-MenuBGTilesNumber  EQU 33-0+1
+
+    DEF MenuBGTilesNumber  EQU 33-0+1
+
 MenuBGTilesDataDMG:
     INCBIN	"data/menu_bg_tiles_dmg.bin"
 
 MenuBGMapData: ; tilemap first, attr map second
     INCBIN	"data/menu_bg_map.bin"
-MENU_BG_MAP_WIDTH   EQU 20
-MENU_BG_MAP_HEIGHT  EQU 18
 
-MENU_SPACE_TILE    EQU 181
-MENU_SELECT_TILE   EQU 189 ; ARROW
+    DEF MENU_BG_MAP_WIDTH   EQU 20
+    DEF MENU_BG_MAP_HEIGHT  EQU 18
+
+    DEF MENU_SPACE_TILE    EQU 181
+    DEF MENU_SELECT_TILE   EQU 189 ; ARROW
 
 FlashTilesData:
     INCBIN	"data/flash_tiles.bin"
-FlashTilesNumber  EQU 5*4 ; 5 tiles
+
+    DEF FlashTilesNumber  EQU 5*4 ; 5 tiles
 
 ;--------------------------------------------------------------------------
 
@@ -111,10 +115,10 @@ LoadMenuTiles::
 LoadMenuPalettes::
 
     ld      a,%00011011
-    ld      [rBGP],a
+    ldh     [rBGP],a
     ld      a,%11100100
-    ld      [rOBP0],a
-    ld      [rOBP1],a
+    ldh     [rOBP0],a
+    ldh     [rOBP1],a
 
     ld      hl,MenuPalettesBG
     ld      a,0
@@ -152,7 +156,7 @@ LoadMenuScreen:
     call    LoadMenuTiles
 
     xor     a,a
-    ld      [rVBK],a
+    ldh     [rVBK],a
     ld      de,$9800
     ld      hl,MenuBGMapData
     ld      a,MENU_BG_MAP_HEIGHT
@@ -175,7 +179,7 @@ LoadMenuScreen:
     jr      z,.skip_attr
 
     ld      a,1
-    ld      [rVBK],a
+    ldh     [rVBK],a
     ld      de,$9800
     ld      hl,MenuBGMapData+MENU_BG_MAP_WIDTH*MENU_BG_MAP_HEIGHT
     ld      a,MENU_BG_MAP_HEIGHT
@@ -196,8 +200,8 @@ LoadMenuScreen:
 .skip_attr:
 
     xor     a,a
-    ld      [rSCX],a
-    ld      [rSCY],a
+    ldh     [rSCX],a
+    ldh     [rSCY],a
 
     ; Load text tiles
     call    LoadText
@@ -223,7 +227,7 @@ LoadMenuScreen:
 
     ; Enable interrupts
     ld      a,IEF_VBLANK
-    ld      [rIE],a
+    ldh     [rIE],a
 
     ld      bc,MenuHandlerVBL
     call    irq_set_VBL
@@ -232,14 +236,14 @@ LoadMenuScreen:
 
     ; Screen configuration
     ld      a,LCDCF_BG9800|LCDCF_OBJON|LCDCF_ON|LCDCF_OBJ16
-    ld      [rLCDC],a
+    ldh     [rLCDC],a
 
     ld      a,[EnabledGBC]
     and     a,a
     ret     nz ; this config is enough for GBC, but not DMG
 
     ld      a,LCDCF_BG9800|LCDCF_OBJON|LCDCF_ON|LCDCF_OBJ16|LCDCF_BGON
-    ld      [rLCDC],a
+    ldh     [rLCDC],a
 
     ; Done
     ret

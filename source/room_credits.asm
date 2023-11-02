@@ -22,8 +22,9 @@
 
 CreditsBGMapData: ; tilemap first, attr map second
     INCBIN	"data/credits_bg_map.bin"
-CREDITS_BG_MAP_WIDTH   EQU 20
-CREDITS_BG_MAP_HEIGHT  EQU 18
+
+    DEF CREDITS_BG_MAP_WIDTH   EQU 20
+    DEF CREDITS_BG_MAP_HEIGHT  EQU 18
 
 ;--------------------------------------------------------------------------
 
@@ -49,7 +50,7 @@ LoadMenuScreen:
     call    LoadMenuTiles
 
     xor     a,a
-    ld      [rVBK],a
+    ldh     [rVBK],a
     ld      de,$9800
     ld      hl,CreditsBGMapData
     ld      a,CREDITS_BG_MAP_HEIGHT
@@ -72,7 +73,7 @@ LoadMenuScreen:
     jr      z,.skip_attr
 
     ld      a,1
-    ld      [rVBK],a
+    ldh     [rVBK],a
     ld      de,$9800
     ld      hl,CreditsBGMapData+CREDITS_BG_MAP_WIDTH*CREDITS_BG_MAP_HEIGHT
     ld      a,CREDITS_BG_MAP_HEIGHT
@@ -93,8 +94,8 @@ LoadMenuScreen:
 .skip_attr:
 
     xor     a,a
-    ld      [rSCX],a
-    ld      [rSCY],a
+    ldh     [rSCX],a
+    ldh     [rSCY],a
 
     ; Load text tiles
     call    LoadText
@@ -107,7 +108,7 @@ LoadMenuScreen:
 
     ; Enable interrupts
     ld      a,IEF_VBLANK
-    ld      [rIE],a
+    ldh     [rIE],a
 
     ld      bc,CreditsHandlerVBL
     call    irq_set_VBL
@@ -117,7 +118,7 @@ LoadMenuScreen:
     ; Screen configuration
     ld      a,[LCDCF_GBC_MODE]
     or      a,LCDCF_BG9800|LCDCF_ON
-    ld      [rLCDC],a
+    ldh     [rLCDC],a
 
     ; Done
     ret
