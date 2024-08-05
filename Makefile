@@ -33,7 +33,7 @@ SOURCES := $(foreach dir,$(MYSOURCES),$(CURDIR)/$(dir))
 ASMFILES := $(foreach dir,$(SOURCES),$(wildcard $(dir)/*.asm))
 
 # Make it include all source folders - Add a '/' at the end of the path
-INCLUDES := $(foreach dir,$(MYSOURCES),-i$(CURDIR)/$(dir)/)
+INCLUDES := $(foreach dir,$(MYSOURCES),-I$(CURDIR)/$(dir)/)
 
 # Prepare object paths
 OBJ = $(ASMFILES:.asm=.obj)
@@ -49,10 +49,9 @@ clean:
 	@echo rm $(OBJ) $(BIN) $(NAME).sym $(NAME).map
 	@rm -f $(OBJ) $(BIN) $(NAME).sym $(NAME).map
 
-# TODO: Remove the -h when RGBASM is updated to remove it
 %.obj : %.asm
 	@echo rgbasm $@ $<
-	@$(RGBASM) $(INCLUDES) -h -o$@ $<
+	@$(RGBASM) $(INCLUDES) -o$@ $<
 
 $(BIN): $(OBJ)
 	@echo rgblink $(BIN)
