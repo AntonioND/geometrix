@@ -745,22 +745,22 @@ BoardInitFill:
 PrintSwapString:
 
     ld      hl,BoardVRAM + 32*(18+2-1) + 12 ; Pointer to start of word in VRAM buffer
-    ld      a,"S"
+    ld      a,'S'
     push    hl
     call    ASCII2Tile
     pop     hl
     ld      [hl+],a
-    ld      a,"w"
+    ld      a,'w'
     push    hl
     call    ASCII2Tile
     pop     hl
     ld      [hl+],a
-    ld      a,"a"
+    ld      a,'a'
     push    hl
     call    ASCII2Tile
     pop     hl
     ld      [hl+],a
-    ld      a,"p"
+    ld      a,'p'
     push    hl
     call    ASCII2Tile
     pop     hl
@@ -771,22 +771,22 @@ PrintSwapString:
 PrintTimeString:
 
     ld      hl,BoardVRAM + 32*(18+2-1) + 12 ; Pointer to start of word in VRAM buffer
-    ld      a,"T"
+    ld      a,'T'
     push    hl
     call    ASCII2Tile
     pop     hl
     ld      [hl+],a
-    ld      a,"i"
+    ld      a,'i'
     push    hl
     call    ASCII2Tile
     pop     hl
     ld      [hl+],a
-    ld      a,"m"
+    ld      a,'m'
     push    hl
     call    ASCII2Tile
     pop     hl
     ld      [hl+],a
-    ld      a,"e"
+    ld      a,'e'
     push    hl
     call    ASCII2Tile
     pop     hl
