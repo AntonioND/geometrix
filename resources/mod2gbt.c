@@ -10,6 +10,7 @@
 *        --------------------------------------------------------------
 *
 *                                          antonio_nd@outlook.com
+*                                          antonio_nd@proton.me
 */
 
 #include <stdio.h>
@@ -826,6 +827,7 @@ int main(int argc, char * argv[])
     printf("     |                      All rights reserved. |\n");
     printf("     |                                           |\n");
     printf("     |                   antonio_nd@outlook.com  |\n");
+    printf("     |                   antonio_nd@proton.me    |\n");
     printf("     |                                           |\n");
     printf("     +-------------------------------------------+\n");
     printf("\n");

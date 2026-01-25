@@ -10,6 +10,7 @@
 ;        --------------------------------------------------------------
 ;
 ;                                          antonio_nd@outlook.com
+;                                          antonio_nd@proton.me
 
     IF !DEF(GBT_PLAYER_INC)
     DEF GBT_PLAYER_INC = 1

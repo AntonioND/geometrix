@@ -43,17 +43,17 @@ Credits
 Game made by AntonioND/SkyLyrac (Antonio Niño Díaz)
 Music player: GBT Player
 
-Email:  antonio_nd@outlook.com / antonionidi@gmail.com
+Email:  antonio_nd@outlook.com / antonio_nd@proton.me
 
-Web: www.skylyrac.net
+Web: https://www.skylyrac.net
 
-GitHub: https://github.com/AntonioND
+Codeberg: https://codeberg.org/SkyLyrac
 
 This game is licensed under the GPL v3 license. You may have received the source
 code of this game along with the ROM file. If not, the source code is freely
-available at the following address: https://github.com/AntonioND/geometrix
+available at the following address: https://codeberg.org/SkyLyrac/geometrix
 
-RGBDS needed: https://github.com/bentley/rgbds/
+RGBDS needed: https://github.com/gbdev/rgbds
 
 License
 -------

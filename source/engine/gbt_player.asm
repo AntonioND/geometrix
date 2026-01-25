@@ -10,6 +10,7 @@
 ;        --------------------------------------------------------------
 ;
 ;                                          antonio_nd@outlook.com
+;                                          antonio_nd@proton.me
 
     INCLUDE "hardware.inc"
     INCLUDE "gbt_player.inc"
